@@ -3635,7 +3635,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 464142419}
+      objectReference: {fileID: 1094736782}
     - target: {fileID: 9169177127291168483, guid: 34b5f0a15fec622478ddf96912054678,
         type: 3}
       propertyPath: m_RootOrder
