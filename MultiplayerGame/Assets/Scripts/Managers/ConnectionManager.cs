@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using static PlayerStats;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class ConnectionManager : MonoBehaviour
+public class ConnectionManager : MonoBehaviourPunCallbacks
 {
     #region Propierties
 
@@ -311,6 +313,24 @@ public class ConnectionManager : MonoBehaviour
         if (isConnected)
             EndConnection();
 
+        // PHOTON TESTING   ---> Modificar esto para que solo funcione al crear una conexión ONLINE
+
+        PhotonNetwork.ConnectUsingSettings();
+
+        RoomOptions roomOptions = new()
+        {
+            IsVisible = true,
+            MaxPlayers = 8
+        };
+
+        PhotonNetwork.CreateRoom("room", roomOptions);
+        
+        PhotonNetwork.JoinRoom("room");
+
+
+
+        //
+
         try
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -503,8 +523,7 @@ public class ConnectionManager : MonoBehaviour
                         sendPStream = SerializeJson(pPck);
 
                         socket.SendTo(sendPStream.ToArray(), (int)sendPStream.Length, SocketFlags.None, remote);
-                        //delay = 0;
-
+                      
                         if (randomPackageToSend != null)
                         {
                             MemoryStream sendPStreamB = new MemoryStream();
